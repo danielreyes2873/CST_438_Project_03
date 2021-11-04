@@ -10,6 +10,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     Button testAPIButton;
+    Button btnCreateAcc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +18,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         testAPIButton = (Button) findViewById(R.id.apiButton);
+        btnCreateAcc = (Button) findViewById(R.id.btnCreateAcc);
+
+        btnCreateAcc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, CreateAcc.class);
+                startActivity(intent);
+            }
+        });
 
         testAPIButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -26,4 +36,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+//    public void onClick(View v) {
+//        if(v.getId() == R.id.btnCreateAcc){
+//            Intent i = new Intent(this, CreateAcc.class);
+//            startActivity(i);
+//
+//        }
+//    }
+
+
 }
