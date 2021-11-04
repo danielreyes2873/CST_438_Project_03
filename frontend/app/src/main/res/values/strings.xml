@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">CST_438_Project_03</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
+    <string name="create_account"> Sign Up</string>
+
 </resources>
