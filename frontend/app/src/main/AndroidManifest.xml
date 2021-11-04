@@ -12,6 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CST_438_Project_03">
         <activity
+            android:name=".UserViewProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditQuizNameDescriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditAnswerQuestionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TempPageActivity"
+            android:exported="false" />
+        <activity
             android:name=".apiTest"
             android:exported="true" />
         <activity
@@ -23,7 +35,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CreateAcc"></activity>
+        <activity android:name=".CreateAcc" />
     </application>
 
 </manifest>
