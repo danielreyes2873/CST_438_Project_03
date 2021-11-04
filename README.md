@@ -4,6 +4,11 @@ This Android app allows users to create custom quizzes to make studying easier. 
 # Mockup:
 ![CST438_project3_mockup](https://user-images.githubusercontent.com/32247665/139358164-1d3d09b0-3914-4931-bccc-32a5a732a733.JPG)
 
+#Tech
+Django
+Heroku
+Docker
+Retrofit
 
 ## Contributors:
 Daniel Reyes: danielreyes2873 https://github.com/danielreyes2873 <br>
