@@ -3,5 +3,6 @@
     <string name="enter_username">Enter username</string>
     <string name="enter_password">Enter password</string>
     <string name="create_account"> Sign Up</string>
+    <string name="btn_login"> Login </string>
 
 </resources>
