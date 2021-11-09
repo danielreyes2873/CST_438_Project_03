@@ -13,7 +13,13 @@ class User(models.Model):
 class Quiz(models.Model):
     name = models.CharField(max_length=60, default="quiz")
     description = models.CharField(max_length=160, default="description")
-    userID = models.ForeignKey(User, default=None, on_delete=models.CASCADE)
+    userID = models.IntegerField()
 
     def __str__(self):
         return self.name
+
+
+class Question(models.Model):
+    question = models.CharField(max_length=160, default="Question Body")
+    answer = models.CharField(max_length=250, default="Answer Body")
+    quizID = models.IntegerField()
