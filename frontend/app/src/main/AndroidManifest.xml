@@ -36,6 +36,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".CreateAcc" />
+        <activity android:name=".Login" />
+
     </application>
 
 </manifest>
