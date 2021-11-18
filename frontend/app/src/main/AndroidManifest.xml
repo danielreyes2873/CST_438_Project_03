@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CST_438_Project_03">
         <activity
+            android:name=".usersTest"
+            android:exported="true" />
+        <activity
             android:name=".UserViewProfileActivity"
             android:exported="false" />
         <activity
@@ -37,7 +40,6 @@
         </activity>
         <activity android:name=".CreateAcc" />
         <activity android:name=".Login" />
-
     </application>
 
 </manifest>
