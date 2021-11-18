@@ -40,6 +40,8 @@
         </activity>
         <activity android:name=".CreateAcc" />
         <activity android:name=".Login" />
+        <activity android:name=".CreateQuiz" />
+        <activity android:name=".QandA" />
     </application>
 
 </manifest>

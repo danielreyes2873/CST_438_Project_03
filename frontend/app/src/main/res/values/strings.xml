@@ -4,5 +4,10 @@
     <string name="enter_password">Enter password</string>
     <string name="create_account"> Sign Up</string>
     <string name="btn_login"> Login </string>
-
+    <string name="add_question"> Enter a question/term </string>
+    <string name="add_answer"> Enter answer/definition </string>
+    <string name="btn_add"> Add </string>
+    <string name="name" > Enter quiz name </string>
+    <string name="desc"> Enter description </string>
+    <string name="home"> Home </string>
 </resources>
