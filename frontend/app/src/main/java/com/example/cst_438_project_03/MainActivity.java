@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         testAPIButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, apiTest.class);
+                Intent intent = new Intent(MainActivity.this, usersTest.class);
                 startActivity(intent);
             }
         });
