@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +24,7 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
     String username;
     String password;
     QuizTimeApi quizTimeApi;
+    String dupError;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,19 +48,36 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
 
         quizTimeApi = retrofit.create(QuizTimeApi.class);
 
-        if (hasInput(username, password)) {
-            if (isUsernameEmpty(username) && !isPasswordEmpty(password)) {
-                Toast.makeText(this, "Username empty", Toast.LENGTH_SHORT).show();
-            } else if (!isUsernameEmpty(username) && isPasswordEmpty(password)) {
-                Toast.makeText(this, "Password empty", Toast.LENGTH_SHORT).show();
-            } else{
-                createAccount(username,password);
-                Intent i = new Intent(this, MainActivity.class);
-                startActivity(i);
+        Call<List<Users>> call = quizTimeApi.getUsers();
+
+        call.enqueue(new Callback<List<Users>>() {
+            @Override
+            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    return;
+                }
+
+                List<Users> users = response.body();
+                for(Users user: users){
+                    if(user.getUsername().equals(username)){
+                        System.out.println("This is wrong");
+                        setDupError();
+                        cAcc();
+                    }
+                }
+                cAcc();
+
+                //Add error message here
             }
-        } else {
-            Toast.makeText(this, "Username and password empty", Toast.LENGTH_SHORT).show();
-        }
+
+            @Override
+            public void onFailure(Call<List<Users>> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+
+
     }
 
     public static boolean isUsernameEmpty(String u) {
@@ -81,11 +101,13 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
         }
     }
 
+    private void setDupError() {
+        System.out.println("dup error set");
+        dupError = "Username already taken";
+    }
+
     private void createAccount(String username, String password) {
-        Users user = new Users(username, password);
-
         Call<Users> call = quizTimeApi.createAccount(username, password);
-
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
@@ -93,8 +115,6 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
                     etUsername.setText("Code: " + response.code());
                     return;
                 }
-
-                Users accountResponse = response.body();
             }
 
             @Override
@@ -102,6 +122,28 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
                 etUsername.setText(t.getMessage());
             }
         });
+    }
+
+    public void cAcc() {
+        if (hasInput(username, password)) {
+            if (isUsernameEmpty(username) && !isPasswordEmpty(password)) {
+                Toast.makeText(this, "Username empty", Toast.LENGTH_SHORT).show();
+            } else if (!isUsernameEmpty(username) && isPasswordEmpty(password)) {
+                Toast.makeText(this, "Password empty", Toast.LENGTH_SHORT).show();
+            } else{
+                if (!(dupError == null)) {
+                    Toast.makeText(this,dupError,Toast.LENGTH_SHORT).show();
+                } else {
+                    System.out.println("account created");
+                    createAccount(username, password);
+                    Toast.makeText(this, "New Account Created!", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(this, MainActivity.class);
+                    startActivity(i);
+                }
+            }
+        } else {
+            Toast.makeText(this, "Username and password empty", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
