@@ -61,14 +61,13 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
                 List<Users> users = response.body();
                 for(Users user: users){
                     if(user.getUsername().equals(username)){
-                        System.out.println("This is wrong");
-                        setDupError();
-                        cAcc();
+                        dupError();
+                        return;
                     }
                 }
+
                 cAcc();
 
-                //Add error message here
             }
 
             @Override
@@ -76,8 +75,6 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
                 System.out.println(t.getMessage());
             }
         });
-
-
     }
 
     public static boolean isUsernameEmpty(String u) {
@@ -101,9 +98,9 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
         }
     }
 
-    private void setDupError() {
-        System.out.println("dup error set");
-        dupError = "Username already taken";
+    private void dupError() {
+        System.out.println("dup error");
+        Toast.makeText(this,"Username already taken",Toast.LENGTH_SHORT).show();
     }
 
     private void createAccount(String username, String password) {
@@ -124,22 +121,18 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
         });
     }
 
-    public void cAcc() {
+    public void cAcc() { // name is shortened for "create account"
         if (hasInput(username, password)) {
             if (isUsernameEmpty(username) && !isPasswordEmpty(password)) {
                 Toast.makeText(this, "Username empty", Toast.LENGTH_SHORT).show();
             } else if (!isUsernameEmpty(username) && isPasswordEmpty(password)) {
                 Toast.makeText(this, "Password empty", Toast.LENGTH_SHORT).show();
-            } else{
-                if (!(dupError == null)) {
-                    Toast.makeText(this,dupError,Toast.LENGTH_SHORT).show();
-                } else {
-                    System.out.println("account created");
-                    createAccount(username, password);
-                    Toast.makeText(this, "New Account Created!", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(this, MainActivity.class);
-                    startActivity(i);
-                }
+            } else {
+                System.out.println("account created");
+                createAccount(username, password);
+                Toast.makeText(this, "New Account Created!", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(this, MainActivity.class);
+                startActivity(i);
             }
         } else {
             Toast.makeText(this, "Username and password empty", Toast.LENGTH_SHORT).show();
