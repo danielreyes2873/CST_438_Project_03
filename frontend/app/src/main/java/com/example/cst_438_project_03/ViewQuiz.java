@@ -9,18 +9,62 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ViewQuiz extends  AppCompatActivity{
+    private TextView quizlist;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
 
-        TextView quizlist = (TextView) findViewById(R.id.quizlist);
+        quizlist = (TextView) findViewById(R.id.quizlist);
         quizlist.setText("All Quizzes:");
         quizlist.setBackgroundColor(Color.parseColor("#bacfbf"));
 
         //display all quizzes
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://quiz-time438.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        QuizTimeApi quizTimeApi = retrofit.create(QuizTimeApi.class);
+        getQuizzes(quizTimeApi);
 
     }
 
+    private void getQuizzes(QuizTimeApi quizTimeApi) {
+        Call<List<Quiz>> call = quizTimeApi.getQuizzes();
+
+        call.enqueue(new Callback<List<Quiz>>() {
+            @Override
+            public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+                if(!response.isSuccessful()){
+                    quizlist.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<Quiz> Quizzes = response.body();
+
+                for(Quiz quiz: Quizzes){
+                    String content = "";
+                    content += "Name: " + quiz.getName() + "\n";
+                    content += "Description: " + quiz.getDescription() + "\n";
+                    content += "ID: " + quiz.getUserID() + "\n\n";
+                    quizlist.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Quiz>> call, Throwable t) {
+                quizlist.setText(t.getMessage());
+            }
+        });
+    }
 }
