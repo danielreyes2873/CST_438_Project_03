@@ -14,6 +14,7 @@ public class TempPageActivity extends AppCompatActivity {
     Button viewProfile;
     Button logoutBtn;
     Button createQuiz;
+    Button viewQuiz;
 
 
     @Override
@@ -26,11 +27,20 @@ public class TempPageActivity extends AppCompatActivity {
         viewProfile = findViewById(R.id.viewProfile);
         logoutBtn = findViewById(R.id.logoutBtn);
         createQuiz = findViewById(R.id.createQuiz);
+        viewQuiz = findViewById(R.id.viewQuiz);
 
         createQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TempPageActivity.this, CreateQuiz.class);
+                startActivity(intent);
+            }
+        });
+
+        viewQuiz.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent = new Intent(TempPageActivity.this, ViewQuiz.class);
                 startActivity(intent);
             }
         });
