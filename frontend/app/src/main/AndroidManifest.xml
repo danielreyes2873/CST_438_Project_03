@@ -45,6 +45,7 @@
         <activity android:name=".Login" />
         <activity android:name=".CreateQuiz" />
         <activity android:name=".QandA" />
+        <activity android:name=".ViewQuiz" />
     </application>
 
 </manifest>
