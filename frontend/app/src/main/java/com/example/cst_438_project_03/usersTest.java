@@ -32,6 +32,12 @@ public class usersTest extends AppCompatActivity {
 
         QuizTimeApi quizTimeApi = retrofit.create(QuizTimeApi.class);
 
+        getUsers(quizTimeApi);
+        textViewResult.append("\n");
+        getQuizzes(quizTimeApi);
+    }
+
+    private void getUsers(QuizTimeApi quizTimeApi) {
         Call<List<Users>> call = quizTimeApi.getUsers();
 
         call.enqueue(new Callback<List<Users>>() {
@@ -54,6 +60,35 @@ public class usersTest extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Users>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void getQuizzes(QuizTimeApi quizTimeApi) {
+        Call<List<Quiz>> call = quizTimeApi.getQuizzes();
+
+        call.enqueue(new Callback<List<Quiz>>() {
+            @Override
+            public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+                if(!response.isSuccessful()){
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<Quiz> Quizzes = response.body();
+
+            for(Quiz quiz: Quizzes){
+                    String content = "";
+                    content += "Name: " + quiz.getName() + "\n";
+                    content += "Description: " + quiz.getDescription() + "\n";
+                    content += "ID: " + quiz.getUserID() + "\n\n";
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Quiz>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
