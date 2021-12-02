@@ -15,6 +15,8 @@ public interface QuizTimeApi {
     Call<List<Users>> getUsers();
     @GET("quizzes")
     Call<List<Quiz>> getQuizzes();
+    @GET("questions")
+    Call<List<Question>> getQuestions();
 
     @POST("users")
     Call<Users> createAccount(@Body Users user);
