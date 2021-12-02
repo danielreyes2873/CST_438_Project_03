@@ -35,6 +35,8 @@ public class usersTest extends AppCompatActivity {
         getUsers(quizTimeApi);
         textViewResult.append("\n");
         getQuizzes(quizTimeApi);
+        textViewResult.append("\n");
+        getQuestions(quizTimeApi);
     }
 
     private void getUsers(QuizTimeApi quizTimeApi) {
@@ -89,6 +91,35 @@ public class usersTest extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Quiz>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void getQuestions(QuizTimeApi quizTimeApi) {
+        Call<List<Question>> call = quizTimeApi.getQuestions();
+
+        call.enqueue(new Callback<List<Question>>() {
+            @Override
+            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                if(!response.isSuccessful()){
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                List<Question> Questions = response.body();
+
+                for(Question question: Questions){
+                    String content = "";
+                    content += "Question: " + question.getQuestion() + "\n";
+                    content += "Answer: " + question.getAnswer() + "\n";
+                    content += "ID: " + question.getQuizID() + "\n\n";
+                    textViewResult.append(content);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Question>> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });
