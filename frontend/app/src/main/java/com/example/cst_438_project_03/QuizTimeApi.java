@@ -23,4 +23,12 @@ public interface QuizTimeApi {
             @Field("username") String username,
             @Field("password") String password
     );
+
+    @FormUrlEncoded
+    @POST("quizzes/?format=json")
+    Call<Quiz> createQuiz(
+            @Field("name") String name,
+            @Field("description") String description,
+            @Field("userID") int userID
+    );
 }
