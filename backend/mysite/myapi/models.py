@@ -5,6 +5,8 @@ from django.db import models
 class User(models.Model):
     username = models.CharField(max_length=60)
     password = models.CharField(max_length=60)
+    firstname = models.CharField(max_length=60)
+    lastname = models.CharField(max_length=60)
 
     def __str__(self):
         return self.username
@@ -13,7 +15,7 @@ class User(models.Model):
 class Quiz(models.Model):
     name = models.CharField(max_length=60, default="quiz")
     description = models.CharField(max_length=160, default="description")
-    userID = models.IntegerField()
+    username = models.CharField(max_length=60)
 
     def __str__(self):
         return self.name
@@ -22,4 +24,7 @@ class Quiz(models.Model):
 class Question(models.Model):
     question = models.CharField(max_length=160, default="Question Body")
     answer = models.CharField(max_length=250, default="Answer Body")
-    quizID = models.IntegerField()
+    quizname = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.question

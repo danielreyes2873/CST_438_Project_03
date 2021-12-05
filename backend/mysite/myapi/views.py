@@ -20,5 +20,5 @@ class QuizViewSet(viewsets.ModelViewSet):
 
 
 class QuestionViewSet(viewsets.ModelViewSet):
-    queryset = Question.objects.all().order_by('quizID')
+    queryset = Question.objects.all().order_by('quizname')
     serializer_class = QuestionSerializer
