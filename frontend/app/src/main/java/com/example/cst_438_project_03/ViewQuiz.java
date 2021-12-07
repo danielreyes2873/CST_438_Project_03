@@ -19,10 +19,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewQuiz extends  AppCompatActivity{
     private TextView quizlist;
+    private Button cardBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
+
+        cardBtn = findViewById(R.id.cardBtn);
 
         quizlist = (TextView) findViewById(R.id.quizlist);
         quizlist.setText("All Quizzes:");
@@ -59,6 +62,14 @@ public class ViewQuiz extends  AppCompatActivity{
                     content += "ID: " + quiz.getUserID() + "\n\n";
                     quizlist.append(content);
                 }
+
+                cardBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(ViewQuiz.this, Flashcards.class);
+                        startActivity(intent);
+                    }
+                });
             }
 
             @Override

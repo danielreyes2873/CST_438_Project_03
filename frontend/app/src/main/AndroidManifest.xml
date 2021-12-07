@@ -46,6 +46,7 @@
         <activity android:name=".CreateQuiz" />
         <activity android:name=".QandA" />
         <activity android:name=".ViewQuiz" />
+        <activity android:name=".Flashcards" />
     </application>
 
 </manifest>
