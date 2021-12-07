@@ -8,16 +8,31 @@
     tools:context=".apiTest">
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="128dp">
 
         <TextView
             android:id="@+id/quizlist"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:gravity="center_horizontal"/>
+            android:gravity="center_horizontal"
+            android:textSize="20sp" />
 
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/cardBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Flashcards"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.50" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
