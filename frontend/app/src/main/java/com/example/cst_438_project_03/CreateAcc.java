@@ -21,6 +21,8 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
     View btnCreateAcc;
     EditText etUsername;
     EditText etPassword;
+    EditText firstName;
+    EditText lastName;
     String username;
     String password;
     QuizTimeApi quizTimeApi;
@@ -34,7 +36,8 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
         btnCreateAcc.setOnClickListener(this);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-
+        firstName = findViewById(R.id.fName);
+        lastName = findViewById(R.id.lName);
     }
 
     public void onClick(View v) {
