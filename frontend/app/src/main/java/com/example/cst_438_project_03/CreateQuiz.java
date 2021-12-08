@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
@@ -28,6 +30,7 @@ public class CreateQuiz extends AppCompatActivity{
         etName = findViewById(R.id.name);
         etDescription = findViewById(R.id.desc);
         add = findViewById(R.id.add);
+        String username = getIntent().getStringExtra("username").toString();
 
         add.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,16 +46,18 @@ public class CreateQuiz extends AppCompatActivity{
 
                 quizTimeApi = retrofit.create(QuizTimeApi.class);
 
-                createQuiz(name,description);
+                createQuiz(name,description,username);
 
                 Intent intent = new Intent(CreateQuiz.this, QandA.class);
+                intent.putExtra("username",username);
+                intent.putExtra("quizName", name);
                 startActivity(intent);
             }
         });
     }
 
-    private void createQuiz(String name, String description) {
-        Call<Quiz> call = quizTimeApi.createQuiz(name,description,0);
+    private void createQuiz(String name, String description, String username) {
+        Call<Quiz> call = quizTimeApi.createQuiz(name,description,username);
         call.enqueue(new Callback<Quiz>() {
             @Override
             public void onResponse(Call<Quiz> call, Response<Quiz> response) {
@@ -60,6 +65,7 @@ public class CreateQuiz extends AppCompatActivity{
                     System.out.println("Code: " + response.code());
                 }
                 System.out.println("New Quiz Created: " + name);
+                confirmation();
             }
 
             @Override
@@ -69,5 +75,7 @@ public class CreateQuiz extends AppCompatActivity{
         });
     }
 
-
+    private void confirmation() {
+        Toast.makeText(this, "Quiz Created!", Toast.LENGTH_SHORT).show();
+    }
 }

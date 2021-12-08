@@ -104,7 +104,7 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
     }
 
     private void createAccount(String username, String password) {
-        Call<Users> call = quizTimeApi.createAccount(username, password);
+        Call<Users> call = quizTimeApi.createAccount(username, password, "place", "holder");
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {

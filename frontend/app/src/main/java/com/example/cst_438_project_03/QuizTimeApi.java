@@ -25,7 +25,9 @@ public interface QuizTimeApi {
     @POST("users/?format=json")
     Call<Users> createAccount(
             @Field("username") String username,
-            @Field("password") String password
+            @Field("password") String password,
+            @Field("firstname") String firstname,
+            @Field("lastname") String lastname
     );
 
     @FormUrlEncoded
@@ -33,6 +35,14 @@ public interface QuizTimeApi {
     Call<Quiz> createQuiz(
             @Field("name") String name,
             @Field("description") String description,
-            @Field("userID") int userID
+            @Field("username") String username
+    );
+
+    @FormUrlEncoded
+    @POST("questions/?format=json")
+    Call<Question> addQuestion(
+            @Field("question") String question,
+            @Field("answer") String answer,
+            @Field("quizname") String quizName
     );
 }
