@@ -113,7 +113,7 @@ public class usersTest extends AppCompatActivity {
                     String content = "";
                     content += "Question: " + question.getQuestion() + "\n";
                     content += "Answer: " + question.getAnswer() + "\n";
-                    content += "ID: " + question.getQuizID() + "\n\n";
+                    content += "ID: " + question.getQuizName() + "\n\n";
                     textViewResult.append(content);
                 }
             }

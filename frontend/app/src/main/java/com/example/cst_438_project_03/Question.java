@@ -5,7 +5,13 @@ public class Question {
 
     private String answer;
 
-    private int quizID;
+    private String quizName;
+
+    public Question(String question, String answer, String quizName) {
+        this.question = question;
+        this.answer = answer;
+        this.quizName = quizName;
+    }
 
     public String getQuestion() {
         return question;
@@ -15,7 +21,7 @@ public class Question {
         return answer;
     }
 
-    public int getQuizID() {
-        return quizID;
+    public String getQuizName() {
+        return quizName;
     }
 }

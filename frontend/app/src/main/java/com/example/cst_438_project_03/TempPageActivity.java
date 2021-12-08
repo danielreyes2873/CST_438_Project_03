@@ -21,7 +21,7 @@ public class TempPageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_temp_page);
-
+        String username = getIntent().getStringExtra("userName").toString();
         editAnsQues = findViewById(R.id.editAnsQues);
         editQuizNameDesc = findViewById(R.id.editQuizNameDesc);
         viewProfile = findViewById(R.id.viewProfile);
@@ -33,6 +33,7 @@ public class TempPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TempPageActivity.this, CreateQuiz.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

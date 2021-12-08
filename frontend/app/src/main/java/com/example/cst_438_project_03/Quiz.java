@@ -3,12 +3,12 @@ package com.example.cst_438_project_03;
 public class Quiz {
     private String name;
     private String description;
-    private int userID;
+    private String username;
 
-    public Quiz(String name, String description, int userID) {
+    public Quiz(String name, String description, String username) {
         this.name = name;
         this.description = description;
-        this.userID = userID;
+        this.username = username;
     }
 
     public String getName() {
@@ -19,7 +19,7 @@ public class Quiz {
         return description;
     }
 
-    public int getUserID() {
-        return userID;
+    public String getUserID() {
+        return username;
     }
 }

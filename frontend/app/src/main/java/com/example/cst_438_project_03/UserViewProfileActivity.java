@@ -56,6 +56,7 @@ public class UserViewProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UserViewProfileActivity.this, TempPageActivity.class);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
             }
         });
