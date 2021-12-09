@@ -25,14 +25,14 @@ public class EditQuizNameDescriptionActivity extends AppCompatActivity {
         saveQuizNameDesc.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(),"Information Updated! select Cancel to exit...",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Information Will be Updated Soon! select Cancel to exit...",Toast.LENGTH_LONG).show();
             }
         });
 
         cancelBtn2.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(EditQuizNameDescriptionActivity.this, TempPageActivity.class);
+                Intent intent = new Intent(EditQuizNameDescriptionActivity.this, ViewQuiz.class);
                 startActivity(intent);
             }
         });
