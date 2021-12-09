@@ -19,17 +19,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewQuiz extends  AppCompatActivity{
     private TextView quizlist;
-    private Button cardBtn;
+    private Button backBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
 
-        cardBtn = findViewById(R.id.cardBtn);
+        backBtn = findViewById(R.id.backBtn);
 
         quizlist = (TextView) findViewById(R.id.quizlist);
-        quizlist.setText("All Quizzes:");
-        quizlist.setBackgroundColor(Color.parseColor("#bacfbf"));
+        quizlist.setText("Click any quiz:\n\n");
 
         //display all quizzes
         Retrofit retrofit = new Retrofit.Builder()
@@ -61,12 +60,20 @@ public class ViewQuiz extends  AppCompatActivity{
                     content += "Description: " + quiz.getDescription() + "\n";
                     content += "ID: " + quiz.getUserID() + "\n\n";
                     quizlist.append(content);
+
+                    quizlist.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(ViewQuiz.this, Flashcards.class);
+                            startActivity(intent);
+                        }
+                    });
                 }
 
-                cardBtn.setOnClickListener(new View.OnClickListener() {
+                backBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(ViewQuiz.this, Flashcards.class);
+                        Intent intent = new Intent(ViewQuiz.this, MainActivity.class);
                         startActivity(intent);
                     }
                 });
