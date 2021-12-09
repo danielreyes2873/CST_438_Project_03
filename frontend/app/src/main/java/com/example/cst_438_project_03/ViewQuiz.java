@@ -38,7 +38,6 @@ public class ViewQuiz extends  AppCompatActivity{
 
         QuizTimeApi quizTimeApi = retrofit.create(QuizTimeApi.class);
         getQuizzes(quizTimeApi);
-
     }
 
     private void getQuizzes(QuizTimeApi quizTimeApi) {
@@ -64,7 +63,7 @@ public class ViewQuiz extends  AppCompatActivity{
                     quizlist.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent = new Intent(ViewQuiz.this, Flashcards.class);
+                            Intent intent = new Intent(ViewQuiz.this, optionPopup.class);
                             startActivity(intent);
                         }
                     });

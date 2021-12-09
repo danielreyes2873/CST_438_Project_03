@@ -61,6 +61,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             Intent j = new Intent(Login.this, UserViewProfileActivity.class);
                             j.putExtra("userName", userName);
                             j.putExtra("password", password);
+                            j.putExtra("fistName", user.getFirstname());
+                            j.putExtra("lastName", user.getLastname());
                             startActivity(j);
                         }
                     }
