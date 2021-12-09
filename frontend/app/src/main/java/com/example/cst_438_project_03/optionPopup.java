@@ -2,23 +2,22 @@ package com.example.cst_438_project_03;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class optionPopup extends Activity {
 
-    Button tBtn;
+    Button deleteBtn;
     Button fcBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_option_popup);
-        tBtn = findViewById(R.id.tBtn);
+        deleteBtn = findViewById(R.id.deleteBtn);
         fcBtn = findViewById(R.id.fcBtn);
 
         DisplayMetrics dm = new DisplayMetrics();
@@ -30,10 +29,11 @@ public class optionPopup extends Activity {
         getWindow().setLayout((int)(width*.8), (int)(height*.6));
 
 
-        tBtn.setOnClickListener(new View.OnClickListener(){
+        deleteBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(optionPopup.this, EditQuizNameDescriptionActivity.class);
+                Toast.makeText(getApplicationContext(),"Set will be deleted soon.",Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(optionPopup.this, ViewQuiz.class);
                 startActivity(intent);
             }
         });
