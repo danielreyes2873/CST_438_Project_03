@@ -25,6 +25,8 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
     EditText lastName;
     String username;
     String password;
+    String firstname;
+    String lastname;
     QuizTimeApi quizTimeApi;
     String dupError;
 
@@ -43,6 +45,9 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
     public void onClick(View v) {
         username = etUsername.getText().toString();
         password = etPassword.getText().toString();
+        firstname = firstName.getText().toString();
+        lastname = lastName.getText().toString();
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://quiz-time438.herokuapp.com/")
@@ -106,8 +111,8 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
         Toast.makeText(this,"Username already taken",Toast.LENGTH_SHORT).show();
     }
 
-    private void createAccount(String username, String password) {
-        Call<Users> call = quizTimeApi.createAccount(username, password, "place", "holder");
+    private void createAccount(String username, String password, String firstname, String lastname) {
+        Call<Users> call = quizTimeApi.createAccount(username, password, firstname, lastname);
         call.enqueue(new Callback<Users>() {
             @Override
             public void onResponse(Call<Users> call, Response<Users> response) {
@@ -132,7 +137,7 @@ public class CreateAcc extends AppCompatActivity implements View.OnClickListener
                 Toast.makeText(this, "Password empty", Toast.LENGTH_SHORT).show();
             } else {
                 System.out.println("account created");
-                createAccount(username, password);
+                createAccount(username, password, firstname, lastname);
                 Toast.makeText(this, "New Account Created!", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(this, MainActivity.class);
                 startActivity(i);
