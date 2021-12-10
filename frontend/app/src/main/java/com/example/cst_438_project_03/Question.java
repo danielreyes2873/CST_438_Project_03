@@ -5,12 +5,12 @@ public class Question {
 
     private String answer;
 
-    private String quizName;
+    private String quizname;
 
     public Question(String question, String answer, String quizName) {
         this.question = question;
         this.answer = answer;
-        this.quizName = quizName;
+        this.quizname = quizName;
     }
 
     public String getQuestion() {
@@ -22,6 +22,6 @@ public class Question {
     }
 
     public String getQuizName() {
-        return quizName;
+        return quizname;
     }
 }
