@@ -20,10 +20,13 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ViewQuiz extends  AppCompatActivity{
     private TextView quizlist;
     private Button backBtn;
+    String userName;
+    String quizName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
+        userName = getIntent().getStringExtra("userName").toString();
 
         backBtn = findViewById(R.id.backBtn);
 
@@ -57,13 +60,15 @@ public class ViewQuiz extends  AppCompatActivity{
                     String content = "";
                     content += "Name: " + quiz.getName() + "\n";
                     content += "Description: " + quiz.getDescription() + "\n";
-                    content += "ID: " + quiz.getUserID() + "\n\n";
+                    content += "Created By: " + quiz.getUserID() + "\n\n";
                     quizlist.append(content);
 
                     quizlist.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(ViewQuiz.this, optionPopup.class);
+                            intent.putExtra("quizName", quiz.getName());
+                            intent.putExtra("userName", userName);
                             startActivity(intent);
                         }
                     });
@@ -72,7 +77,8 @@ public class ViewQuiz extends  AppCompatActivity{
                 backBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent(ViewQuiz.this, MainActivity.class);
+                        Intent intent = new Intent(ViewQuiz.this, TempPageActivity.class);
+                        intent.putExtra("userName", userName);
                         startActivity(intent);
                     }
                 });

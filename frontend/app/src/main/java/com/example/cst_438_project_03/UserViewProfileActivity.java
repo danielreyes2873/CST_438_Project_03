@@ -73,6 +73,8 @@ public class UserViewProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(UserViewProfileActivity.this, user_edit_profile.class);
                 intent.putExtra("userName", userName);
                 intent.putExtra("password", password);
+                intent.putExtra("fistName", firstName);
+                intent.putExtra("lastName", lastName);
                 startActivity(intent);
             }
         });
