@@ -24,6 +24,8 @@ public class user_edit_profile extends AppCompatActivity {
         setContentView(R.layout.activity_user_edit_profile);
         String userName = getIntent().getStringExtra("userName").toString();
         String password = getIntent().getStringExtra("password").toString();
+        String firstName = getIntent().getStringExtra("firstName").toString();
+        String lastName = getIntent().getStringExtra("lastName").toString();
         userEditUserNameInput = (EditText) findViewById(R.id.userEditUserNameInput);
         userEditProfileNewPassword = (EditText) findViewById(R.id.userEditProfileNewPassword);
         userEditProfileNewPasswordRetype = (EditText) findViewById(R.id.userEditProfileNewPasswordRetype);
@@ -35,6 +37,10 @@ public class user_edit_profile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(user_edit_profile.this, UserViewProfileActivity.class);
+                intent.putExtra("userName", userName);
+                intent.putExtra("password", password);
+                intent.putExtra("fistName", firstName);
+                intent.putExtra("lastName", lastName);
                 startActivity(intent);
             }
         });
@@ -78,6 +84,10 @@ public class user_edit_profile extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                             public void run() {
                                 Intent intent = new Intent(user_edit_profile.this, UserViewProfileActivity.class);
+                                intent.putExtra("userName", userName);
+                                intent.putExtra("password", password);
+                                intent.putExtra("fistName", firstName);
+                                intent.putExtra("lastName", lastName);
                                 startActivity(intent);
                             }
                         }, 5000);   //5 seconds

@@ -12,6 +12,8 @@ public class optionPopup extends Activity {
 
     Button deleteBtn;
     Button fcBtn;
+    String userName;
+    String quizName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +21,9 @@ public class optionPopup extends Activity {
         setContentView(R.layout.activity_option_popup);
         deleteBtn = findViewById(R.id.deleteBtn);
         fcBtn = findViewById(R.id.fcBtn);
+        quizName = getIntent().getStringExtra("quizName").toString();
+        System.out.println(quizName);
+        userName = getIntent().getStringExtra("userName").toString();
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -34,6 +39,7 @@ public class optionPopup extends Activity {
             public void onClick(View view) {
                 Toast.makeText(getApplicationContext(),"Set will be deleted soon.",Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(optionPopup.this, ViewQuiz.class);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
             }
         });
@@ -42,6 +48,8 @@ public class optionPopup extends Activity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(optionPopup.this, Flashcards.class);
+                intent.putExtra("quizName", quizName);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
             }
         });

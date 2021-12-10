@@ -17,6 +17,8 @@ public class Flashcards extends AppCompatActivity {
     TextView hi;
     boolean isFront = true;
     Button back;
+    String quizName;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,9 @@ public class Flashcards extends AppCompatActivity {
         setContentView(R.layout.activity_flashcard);
         front = findViewById(R.id.frontCard);
         back = findViewById(R.id.backBtn);
+
+        quizName = getIntent().getStringExtra("quizName").toString();
+        userName = getIntent().getStringExtra("userName").toString();
 
         ObjectAnimator anime_1 = ObjectAnimator.ofFloat(front, "scaleX", 1f, 0f);
         ObjectAnimator anime_2 = ObjectAnimator.ofFloat(front, "scaleX", 0f, 1f);
@@ -71,6 +76,7 @@ public class Flashcards extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Flashcards.this, ViewQuiz.class);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
             }
         });

@@ -40,6 +40,7 @@ public class TempPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(TempPageActivity.this, ViewQuiz.class);
+                intent.putExtra("userName", username);
                 startActivity(intent);
             }
         });
@@ -48,6 +49,7 @@ public class TempPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(TempPageActivity.this, EditAnswerQuestionActivity.class);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });
