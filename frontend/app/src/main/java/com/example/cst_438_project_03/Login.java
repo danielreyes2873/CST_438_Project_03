@@ -1,7 +1,9 @@
 package com.example.cst_438_project_03;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
@@ -24,6 +26,17 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // custom image for action bar end
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.custuom_image, null);
+        actionBar.setCustomView(view);
+        // custom image for action bar end
+
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
@@ -58,7 +71,7 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 for(Users user: users){
                     if(user.getUsername().equals(userName)){
                         if(user.getPassword().equals(password)){
-                            Intent j = new Intent(Login.this, UserViewProfileActivity.class);
+                            Intent j = new Intent(Login.this, TempPageActivity.class);
                             j.putExtra("userName", userName);
                             j.putExtra("password", password);
                             j.putExtra("firstName", user.getFirstname());

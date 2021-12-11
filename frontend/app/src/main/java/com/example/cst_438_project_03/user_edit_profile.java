@@ -2,9 +2,11 @@ package com.example.cst_438_project_03;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ public class user_edit_profile extends AppCompatActivity {
     EditText userEditUserNameInput;
     EditText userEditProfileNewPassword;
     EditText userEditProfileNewPasswordRetype;
+    EditText userEditProfileNewFirstName;
+    EditText userEditProfileNewLastName;
     Button updateProfileBtn;
     Button cancelBtn6;
 
@@ -22,17 +26,47 @@ public class user_edit_profile extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_edit_profile);
+
+        // custom image for action bar end
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.custuom_image, null);
+        actionBar.setCustomView(view);
+        // custom image for action bar end
+
+        // Get user information
         String userName = getIntent().getStringExtra("userName").toString();
         String password = getIntent().getStringExtra("password").toString();
-        String firstName = getIntent().getStringExtra("firstName").toString();
-        String lastName = getIntent().getStringExtra("lastName").toString();
+        String firstName, lastName;
+
+        if(getIntent().getStringExtra("firstName") == (null)) {
+            firstName = "missing FN";
+        } else {
+            firstName = getIntent().getStringExtra("firstName").toString();
+        }
+
+        if (getIntent().getStringExtra("lastName") == (null)){
+            lastName = "missing LN";
+        } else {
+            lastName = getIntent().getStringExtra("lastName").toString();
+        }
+
+        // variables
         userEditUserNameInput = (EditText) findViewById(R.id.userEditUserNameInput);
         userEditProfileNewPassword = (EditText) findViewById(R.id.userEditProfileNewPassword);
         userEditProfileNewPasswordRetype = (EditText) findViewById(R.id.userEditProfileNewPasswordRetype);
         updateProfileBtn = (Button) findViewById(R.id.updateProfileBtn);
         cancelBtn6 = (Button) findViewById(R.id.cancelBtn6);
-        userEditUserNameInput.setHint(userName);
 
+        // Hints
+        userEditUserNameInput.setHint(userName);
+        //userEditProfileNewFirstName.setText(firstName);
+        //userEditProfileNewLastName.setText(lastName);
+
+        // User no long wanted to update information
         cancelBtn6.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -45,7 +79,7 @@ public class user_edit_profile extends AppCompatActivity {
             }
         });
 
-        // NEEDS TO BE UPDATED!!!
+        // NEEDS TO BE UPDATED!!! - User wanted to update their information
         updateProfileBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
