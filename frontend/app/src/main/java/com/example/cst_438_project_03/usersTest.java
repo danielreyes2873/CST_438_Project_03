@@ -32,11 +32,12 @@ public class usersTest extends AppCompatActivity {
 
         QuizTimeApi quizTimeApi = retrofit.create(QuizTimeApi.class);
 
-        getUsers(quizTimeApi);
-        textViewResult.append("\n");
-        getQuizzes(quizTimeApi);
-        textViewResult.append("\n");
-        getQuestions(quizTimeApi);
+//        getUsers(quizTimeApi);
+//        textViewResult.append("\n");
+//        getQuizzes(quizTimeApi);
+//        textViewResult.append("\n");
+//        getQuestions(quizTimeApi);
+        updateUser(quizTimeApi);
     }
 
     private void getUsers(QuizTimeApi quizTimeApi) {
@@ -120,6 +121,36 @@ public class usersTest extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Question>> call, Throwable t) {
+                textViewResult.setText(t.getMessage());
+            }
+        });
+    }
+
+    private void updateUser(QuizTimeApi quizTimeApi) {
+        Users user = new Users("updated", "123", "up", "date");
+
+        Call<Users> call = quizTimeApi.putUser(1, user);
+
+        call.enqueue(new Callback<Users>() {
+            @Override
+            public void onResponse(Call<Users> call, Response<Users> response) {
+                if(!response.isSuccessful()){
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+
+                Users users = response.body();
+
+                    String content = "";
+                    content += "Code: " + response.code() + "\n";
+                    content += "Username: " + user.getUsername() + "\n";
+                    content += "Password: " + user.getPassword() + "\n\n";
+                    textViewResult.append(content);
+
+            }
+
+            @Override
+            public void onFailure(Call<Users> call, Throwable t) {
                 textViewResult.setText(t.getMessage());
             }
         });

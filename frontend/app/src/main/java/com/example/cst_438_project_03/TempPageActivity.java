@@ -76,15 +76,23 @@ public class TempPageActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Intent intent = new Intent(TempPageActivity.this, ViewQuiz.class);
-//                intent.putExtra("userName", username);
-//                intent.putExtra("password", password);
-//                intent.putExtra("fistName", firstName);
-//                intent.putExtra("lastName", lastName);
+                intent.putExtra("userName", username);
                 startActivity(intent);
             }
         });
 
-//        editAnsQues.setOnClickListener(new View.OnClickListener(){
+        editAnsQues.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(TempPageActivity.this, EditAnswerQuestionActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+            }
+        });
+
+
+//        viewProfile.setOnClickListener(new View.OnClickListener(){
+
 //            @Override
 //            public void onClick(View view) {
 //                Intent intent = new Intent(TempPageActivity.this, EditAnswerQuestionActivity.class);

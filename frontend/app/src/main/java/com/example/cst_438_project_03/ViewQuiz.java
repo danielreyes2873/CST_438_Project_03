@@ -22,17 +22,15 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewQuiz extends  AppCompatActivity{
     private TextView quizlist;
-//    private Button backBtn;
-
-//    String username = getIntent().getStringExtra("userName").toString();
-//    String password = getIntent().getStringExtra("password").toString();
-//    String firstName = getIntent().getStringExtra("firstName").toString();
-//    String lastName = getIntent().getStringExtra("lastName").toString();
-
+    private Button backBtn;
+    String userName;
+    String quizName;
+  
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
+        userName = getIntent().getStringExtra("userName").toString();
 
         // custom image for action bar end
         androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
@@ -89,13 +87,15 @@ public class ViewQuiz extends  AppCompatActivity{
                     String content = "";
                     content += "Name: " + quiz.getName() + "\n";
                     content += "Description: " + quiz.getDescription() + "\n";
-                    content += "ID: " + quiz.getUserID() + "\n\n";
+                    content += "Created By: " + quiz.getUserID() + "\n\n";
                     quizlist.append(content);
 
                     quizlist.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent = new Intent(ViewQuiz.this, optionPopup.class);
+                            intent.putExtra("quizName", quiz.getName());
+                            intent.putExtra("userName", userName);
                             startActivity(intent);
                         }
                     });
@@ -112,6 +112,7 @@ public class ViewQuiz extends  AppCompatActivity{
 //                        startActivity(intent);
 //                    }
 //                });
+
             }
 
             @Override

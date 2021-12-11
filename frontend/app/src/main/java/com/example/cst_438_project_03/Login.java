@@ -74,14 +74,12 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                             Intent j = new Intent(Login.this, TempPageActivity.class);
                             j.putExtra("userName", userName);
                             j.putExtra("password", password);
-                            j.putExtra("fistName", user.getFirstname());
+                            j.putExtra("firstName", user.getFirstname());
                             j.putExtra("lastName", user.getLastname());
                             startActivity(j);
                         }
                     }
                 }
-
-                //Add error message here
             }
 
             @Override

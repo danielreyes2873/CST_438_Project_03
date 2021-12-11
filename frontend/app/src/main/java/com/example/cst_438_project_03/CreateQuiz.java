@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -60,12 +62,38 @@ public class CreateQuiz extends AppCompatActivity{
 
                 quizTimeApi = retrofit.create(QuizTimeApi.class);
 
-                createQuiz(name,description,username);
+                Call<List<Quiz>> call = quizTimeApi.getQuizzes();
 
-                Intent intent = new Intent(CreateQuiz.this, QandA.class);
-                intent.putExtra("username",username);
-                intent.putExtra("quizName", name);
-                startActivity(intent);
+                call.enqueue(new Callback<List<Quiz>>() {
+                    @Override
+                    public void onResponse(Call<List<Quiz>> call, Response<List<Quiz>> response) {
+                        if(!response.isSuccessful()){
+                            System.out.println("Code: " + response.code());
+                            return;
+                        }
+
+                        List<Quiz> quizzes = response.body();
+                        for(Quiz quiz: quizzes){
+                            if(quiz.getName().equals(name)){
+                                dupError();
+                                return;
+                            }
+                        }
+
+                        createQuiz(name,description,username);
+
+                        Intent intent = new Intent(CreateQuiz.this, QandA.class);
+                        intent.putExtra("username",username);
+                        intent.putExtra("quizName", name);
+                        startActivity(intent);
+                    }
+
+                    @Override
+                    public void onFailure(Call<List<Quiz>> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                    }
+                });
+
             }
         });
     }
@@ -91,5 +119,10 @@ public class CreateQuiz extends AppCompatActivity{
 
     private void confirmation() {
         Toast.makeText(this, "Quiz Created!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void dupError() {
+        System.out.println("dup error");
+        Toast.makeText(this,"Quiz Name already taken",Toast.LENGTH_SHORT).show();
     }
 }

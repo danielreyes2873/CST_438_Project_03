@@ -15,15 +15,29 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class Flashcards extends AppCompatActivity {
     TextView front;
     TextView hi;
     boolean isFront = true;
-    Button back;
+    Button back, nextButton;
+    String quizName;
+    String userName;
+    int currentCard = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_flashcard);
 
         // custom image for action bar end
@@ -38,6 +52,17 @@ public class Flashcards extends AppCompatActivity {
 
         front = findViewById(R.id.frontCard);
         back = findViewById(R.id.backBtn);
+        nextButton = findViewById(R.id.nextCardBtn);
+
+        quizName = getIntent().getStringExtra("quizName").toString();
+        userName = getIntent().getStringExtra("userName").toString();
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://quiz-time438.herokuapp.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        QuizTimeApi quizTimeApi = retrofit.create(QuizTimeApi.class);
 
         ObjectAnimator anime_1 = ObjectAnimator.ofFloat(front, "scaleX", 1f, 0f);
         ObjectAnimator anime_2 = ObjectAnimator.ofFloat(front, "scaleX", 0f, 1f);
@@ -48,47 +73,84 @@ public class Flashcards extends AppCompatActivity {
         //anime_2 = Answer Card
         anime_2.setInterpolator(new AccelerateInterpolator());
 
-        front.setText("Question"); //Change this line to QUESTION from database
+        //This is gonna hold all the corresponding questions with the quiz.
 
-        front.setOnClickListener(new View.OnClickListener() {
+        Call<List<Question>> call = quizTimeApi.getQuestions();
+        List<Question> target = new ArrayList<>();
+
+        call.enqueue(new Callback<List<Question>>() {
             @Override
-            public void onClick(View view) {
-                if (isFront){
-                    anime_1.start();
-                    anime_1.addListener(new AnimatorListenerAdapter() {
-                        @Override
-                        public void onAnimationEnd(Animator animation) {
-                            super.onAnimationEnd(animation);
-                            front.setText("Answer"); //Change this line to ANSWER from database
-                            anime_2.start();
-                            isFront = false;
+            public void onResponse(Call<List<Question>> call, Response<List<Question>> response) {
+                if(!response.isSuccessful()) {
+                    return;
+                }
 
-                            if(!isFront){
-                                anime_2.addListener(new AnimatorListenerAdapter() {
+                List<Question> questions = response.body();
+
+                for(Question q : questions) {
+                    if(q.getQuizName() != null) {
+                        if(q.getQuizName().equals(quizName)) {
+                            target.add(q);
+                        }
+                    }
+                }
+
+                if(currentCard < target.size()){
+                    front.setText(target.get(currentCard).getQuestion()); //Change this line to QUESTION from database
+                    front.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            if (isFront){
+                                anime_1.start();
+                                anime_1.addListener(new AnimatorListenerAdapter() {
                                     @Override
-                                    public void onAnimationStart(Animator animation) {
-                                        super.onAnimationStart(animation);
-                                        front.setText("Question"); //Change this line to QUESTION from database
-                                        isFront = true;
+                                    public void onAnimationEnd(Animator animation) {
+                                        super.onAnimationEnd(animation);
+//                            front.setText(correctQuestions.get(1).getAnswer()); //Change this line to ANSWER from database
+                                        front.setText(target.get(currentCard).getAnswer()); //Change this line to ANSWER from database
+                                        anime_2.start();
+                                        isFront = false;
+
+                                        if(!isFront){
+                                            anime_2.addListener(new AnimatorListenerAdapter() {
+                                                @Override
+                                                public void onAnimationStart(Animator animation) {
+                                                    super.onAnimationStart(animation);
+                                                    front.setText(target.get(currentCard).getQuestion()); //Change this line to QUESTION from database
+//                                        front.setText(correctQuestions.get(1).getQuestion()); //Change this line to QUESTION from database
+                                                    isFront = true;
+                                                }
+                                            });
+                                        }
                                     }
                                 });
+                            } else {
+                                anime_2.start();
                             }
                         }
                     });
-                } else {
-                    anime_2.start();
                 }
+                nextButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        currentCard += 1;
+                        front.setText(target.get(currentCard).getQuestion());
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(Call<List<Question>> call, Throwable t) {
+                return;
             }
         });
-
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Flashcards.this, ViewQuiz.class);
+                intent.putExtra("userName", userName);
                 startActivity(intent);
             }
         });
-
     }
-
 }

@@ -118,6 +118,10 @@ public class user_edit_profile extends AppCompatActivity {
                     new Handler().postDelayed(new Runnable() {
                             public void run() {
                                 Intent intent = new Intent(user_edit_profile.this, UserViewProfileActivity.class);
+                                intent.putExtra("userName", userName);
+                                intent.putExtra("password", password);
+                                intent.putExtra("fistName", firstName);
+                                intent.putExtra("lastName", lastName);
                                 startActivity(intent);
                             }
                         }, 5000);   //5 seconds
