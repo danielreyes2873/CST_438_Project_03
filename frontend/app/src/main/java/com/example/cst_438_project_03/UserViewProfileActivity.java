@@ -2,8 +2,10 @@ package com.example.cst_438_project_03;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,10 +25,19 @@ public class UserViewProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_view_profile);
 
-        String firstName, lastName;
+        // custom image for action bar end
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
+
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.custuom_image, null);
+        actionBar.setCustomView(view);
+        // custom image for action bar end
 
         String userName = getIntent().getStringExtra("userName").toString();
         String password = getIntent().getStringExtra("password").toString();
+        String firstName, lastName;
 
         if(getIntent().getStringExtra("firstName") == (null)) {
             firstName = "missing FN";
@@ -73,6 +84,8 @@ public class UserViewProfileActivity extends AppCompatActivity {
                 Intent intent = new Intent(UserViewProfileActivity.this, user_edit_profile.class);
                 intent.putExtra("userName", userName);
                 intent.putExtra("password", password);
+                intent.putExtra("fistName", firstName);
+                intent.putExtra("lastName", lastName);
                 startActivity(intent);
             }
         });
@@ -82,6 +95,9 @@ public class UserViewProfileActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(UserViewProfileActivity.this, TempPageActivity.class);
                 intent.putExtra("userName", userName);
+                intent.putExtra("password", password);
+                intent.putExtra("fistName", firstName);
+                intent.putExtra("lastName", lastName);
                 startActivity(intent);
             }
         });

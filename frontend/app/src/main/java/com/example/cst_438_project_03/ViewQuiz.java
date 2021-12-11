@@ -1,9 +1,12 @@
 package com.example.cst_438_project_03;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,14 +22,43 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ViewQuiz extends  AppCompatActivity{
     private TextView quizlist;
-    private Button backBtn;
+//    private Button backBtn;
+
+//    String username = getIntent().getStringExtra("userName").toString();
+//    String password = getIntent().getStringExtra("password").toString();
+//    String firstName = getIntent().getStringExtra("firstName").toString();
+//    String lastName = getIntent().getStringExtra("lastName").toString();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_quiz);
 
-        backBtn = findViewById(R.id.backBtn);
+        // custom image for action bar end
+        androidx.appcompat.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setBackgroundDrawable(getResources().getDrawable(R.drawable.action_bar_bg));
 
+        actionBar.setDisplayShowCustomEnabled(true);
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.custuom_image, null);
+        actionBar.setCustomView(view);
+        // custom image for action bar end
+
+        // User Information
+//        if(getIntent().getStringExtra("firstName") == (null)) {
+//            firstName = "missing FN";
+//        } else {
+//            firstName = getIntent().getStringExtra("firstName").toString();
+//        }
+//
+//        if (getIntent().getStringExtra("lastName") == (null)){
+//            lastName = "missing LN";
+//        } else {
+//            lastName = getIntent().getStringExtra("lastName").toString();
+//        }
+
+        // Variables
+//        backBtn = findViewById(R.id.backBtn);
         quizlist = (TextView) findViewById(R.id.quizlist);
         quizlist.setText("Click any quiz:\n\n");
 
@@ -69,13 +101,17 @@ public class ViewQuiz extends  AppCompatActivity{
                     });
                 }
 
-                backBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(ViewQuiz.this, MainActivity.class);
-                        startActivity(intent);
-                    }
-                });
+//                backBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Intent intent = new Intent(ViewQuiz.this, TempPageActivity.class);
+////                        intent.putExtra("userName", username);
+////                        intent.putExtra("password", password);
+////                        intent.putExtra("fistName", firstName);
+////                        intent.putExtra("lastName", lastName);
+//                        startActivity(intent);
+//                    }
+//                });
             }
 
             @Override
