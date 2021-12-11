@@ -11,6 +11,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class Flashcards extends AppCompatActivity {
     TextView front;
     TextView hi;
     boolean isFront = true;
-    Button back, nextButton;
+    Button back, nextButton, resetBtn;
     String quizName;
     String userName;
     int currentCard = 0;
@@ -39,6 +40,9 @@ public class Flashcards extends AppCompatActivity {
         front = findViewById(R.id.frontCard);
         back = findViewById(R.id.backBtn);
         nextButton = findViewById(R.id.nextCardBtn);
+        resetBtn = findViewById(R.id.resetBtn);
+
+        resetBtn.setVisibility(View.GONE);
 
         quizName = getIntent().getStringExtra("quizName").toString();
         userName = getIntent().getStringExtra("userName").toString();
@@ -120,7 +124,28 @@ public class Flashcards extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         currentCard += 1;
-                        front.setText(target.get(currentCard).getQuestion());
+                        if(currentCard < target.size()) {
+                            front.setText(target.get(currentCard).getQuestion());
+                        } else if(currentCard == target.size() - 1) {
+                            resetBtn.setVisibility(View.VISIBLE);
+                            Toast.makeText(getApplicationContext(), "Quiz Complete", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "No More questions, Press reset or go back", Toast.LENGTH_LONG).show();
+                            resetBtn.setVisibility(View.VISIBLE);
+                        }
+                    }
+                });
+
+                resetBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        currentCard = 0;
+                        if(currentCard < target.size()) {
+                            front.setText(target.get(currentCard).getQuestion());
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_LONG).show();
+                        }
+                        resetBtn.setVisibility(View.GONE);
                     }
                 });
             }
